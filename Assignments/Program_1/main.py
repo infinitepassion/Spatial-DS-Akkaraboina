@@ -3,6 +3,9 @@ import os,sys
 import pygame
 import random 
 import math
+import pprint as pp
+
+pygame.init()
 
 # Get current working path
 DIRPATH = os.path.dirname(os.path.realpath(__file__))
@@ -228,8 +231,14 @@ class DrawGeoJson(object):
 
         self.polygons = []      # list of lists (polygons) to be drawn
 
+
         self.all_lats = []      # list for all lats so we can find mins and max's
         self.all_lons = []
+
+        # New added June 13
+        self.adjusted_polys = []
+        # New added June 13
+        self.adjusted_poly_dict = {}
 
         self.mapWidth = width       # width of the map in pixels
         self.mapHeight = height     # height of the map in pixels
@@ -260,7 +269,7 @@ class DrawGeoJson(object):
         return (x, y)
 
 
-    def add_polygon(self,poly):
+    def add_polygon(self,poly,id=None):
         """
         Add a polygon to local collection to be drawn later
         Args:
@@ -269,28 +278,53 @@ class DrawGeoJson(object):
             None
         """
         self.polygons.append(poly)
+        # New added June 13
+        if id is not None:
+            # if country not in dict, make a list for its polygons
+            # to be appended to.
+            if id not in self.adjusted_poly_dict:
+                self.adjusted_poly_dict[id] = []
+            # append poly to dictionary with country as key (id).
+            self.adjusted_poly_dict[id].append(poly)   
         for p in poly:
             x,y = p
             self.all_lons.append(x)
             self.all_lats.append(y)
         self.__update_bounds()
 
+    # We should use recursion on these containers with arbitrary depth, but oh well.
+    def adjust_poly_dictionary(self):
+        #pp.pprint(self.adjusted_poly_dict)
+        for country,polys in self.adjusted_poly_dict.items():
+            new_polys = []
+            print(country)
+            for poly in polys:
+                new_poly = []
+                for p in poly:
+                    x,y = p
+                    new_poly.append(self.convertGeoToPixel(x,y))
+                new_polys.append(new_poly)
+            self.adjusted_poly_dict[country] = new_polys
+        pp.pprint(self.adjusted_poly_dict)
 
-    def draw_polygons(self):
+
+    def draw_polygons(self,value):
         """
         Draw our polygons to the screen
         Args:
             None
         Returns:
             None
-        """ 
-        black = (0,0,0)
+        """
+
         for poly in self.polygons:
             adjusted = []
             for p in poly:
                 x,y = p
                 adjusted.append(self.convertGeoToPixel(x,y))
-            pygame.draw.polygon(self.screen, self.colors.get_random_color(), adjusted, 0)
+            # New added June 13
+            self.adjusted_polys.append(adjusted)
+            pygame.draw.polygon(self.screen, self.colors.get_random_color(), adjusted, value)
 
     def __update_bounds(self):
         """
@@ -340,22 +374,22 @@ class DrawingFacade(object):
         """ 
         for id in ids:
             if self.wc.key_exists(id):
-                self.__add_country(self.wc.get_country(id))
+                self.__add_country(self.wc.get_country(id),id)
             elif self.sb.key_exists(id):
-                self.__add_state(self.sb.get_state(id))         
+                self.__add_state(self.sb.get_state(id),id)         
 
-    def __add_country(self,country):
+    def __add_country(self,country,id=None):
         for polys in country:
             for poly in polys:
                 if type(poly[0][0]) is float:
-                    gd.add_polygon(poly)
+                    gd.add_polygon(poly,id)
                 else:
                     for sub_poly in poly:
-                        self.gd.add_polygon(sub_poly)
+                        self.gd.add_polygon(sub_poly,id)
 
-    def __add_state(self,state):
+    def __add_state(self,state,id=None):
         for poly in state:
-            self.gd.add_polygon(poly)
+            self.gd.add_polygon(poly,id)
 
 
 
@@ -424,18 +458,58 @@ if __name__ == '__main__':
     gd = DrawGeoJson(screen,width,height)
     df = DrawingFacade(width,height)
 
+    print(gd.__dict__)    
+
     # Add countries and states to our drawing facade.
     # df.add_polygons(['FRA','TX','ESP','AFG','NY'])
     # df.add_polygons(['TX','NY','ME','Kenya'])
-    df.add_polygons(['Spain','France','Belgium','Italy','Ireland','Scotland','Greece','Germany','Egypt','Morocco','India'])
+    df.add_polygons(['TX','Spain','France','Belgium','Italy','Ireland','Scotland','Greece','Germany','Egypt','Morocco','India'])
 
+
+    # Call draw polygons to "adjust" the regular polygons
+    gd.draw_polygons(0)
+    # Call my new method to "adjust" the dictionary of polygons
+    gd.adjust_poly_dictionary()
 
     # Main loop
     running = True
     while running:
-        gd.draw_polygons()
-        
+        gd.draw_polygons(0)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+               # my code addons
+                print (event)
+                (x,y)=pygame.mouse.get_pos()
+                #gd.convertGeoToPixel(x,y)
+                #print( gd.adjusted_poly_dict)
+                for key, value in gd.adjusted_poly_dict.items() :
+                    for point in value:
+                        pos=point_inside_polygon(x,y,point)
+                        #minp=min(point)
+                        #maxp=max(point)
+
+                        xmax,ymax=map(max, zip(*point))
+                        xmin,ymin=map(min, zip(*point))
+                        #print(maxp-minp)
+                        #print(pos)
+                        if pos:
+                            print(key)
+                            text = str(key)
+                            font = pygame.font.Font('freesansbold.ttf', 10)
+                            text = font.render(text, True, (0,0,0))
+                            screen.blit(text, (x, y))
+                            pygame.draw.polygon(screen, (0,0,0), point, 10)
+                           # pygame.draw.polygon(screen, COLOUR, point list, line_thickness)
+                            pygame.draw.rect(screen, (0,0,0), [xmin, ymin, xmax-xmin, ymax-ymin], 2)
+                            #print (minp)
+                           # print (maxp)
+                           # print("test")
+                           # print ( xmax,xmin,ymax,ymin)
+
+                   # print (key)
+
+
+
             pygame.display.flip()
