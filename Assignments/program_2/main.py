@@ -108,10 +108,10 @@ def draw(color,filename):
     # print (x,y)
     running = True
     while running:
-        text = str('Manju Yadav Akkaraboina')
-        font = pygame.font.Font('freesansbold.ttf', 40)
-        text = font.render(text, True, (0,0,0))
-        screen.blit(text, (0, 0))
+        #text = str('Manju Yadav Akkaraboina')
+        #font = pygame.font.Font('freesansbold.ttf', 40)
+        #text = font.render(text, True, (0,0,0))
+        #screen.blit(text, (0, 0))
         for p in points:
             #print (p)
             pygame.draw.circle(screen, color, p, 3, 0)
