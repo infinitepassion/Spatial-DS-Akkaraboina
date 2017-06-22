@@ -1,0 +1,36 @@
+[
+    {
+        "geometry": {
+            "coordinates": [
+                155.1718,
+                -6.2464,
+                135
+            ],
+            "type": "Point"
+        },
+        "mag": 7.9,
+        "magType": "mww",
+        "place": "35km WNW of Panguna, Papua New Guinea",
+        "rms": 1.22,
+        "sig": 987,
+        "time": 1485059422960,
+        "types": ",dyfi,finite-fault,general-text,geoserve,impact-link,impact-text,losspager,moment-tensor,origin,phase-data,poster,shakemap,"
+    },
+    {
+        "geometry": {
+            "coordinates": [
+                122.6171,
+                4.4782,
+                627.17
+            ],
+            "type": "Point"
+        },
+        "mag": 7.3,
+        "magType": "mww",
+        "place": "189km SSE of Tabiauan, Philippines",
+        "rms": 1.05,
+        "sig": 849,
+        "time": 1484028828140,
+        "types": ",dyfi,general-text,geoserve,impact-link,losspager,moment-tensor,origin,phase-data,poster,shakemap,"
+    }
+]
