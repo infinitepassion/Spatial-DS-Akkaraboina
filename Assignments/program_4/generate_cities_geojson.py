@@ -48,7 +48,10 @@ for k,v in data.items():
         else:
             continue
 
-fp=open("Z:\\MS\MWSU\\Summer 1 2017\\program_4\\geo_json\\1000_cities_geo_json.geojson","w")
+
+path=os.getcwd()+"\geo_json\\1000_cities_geo_json.geojson"
+
+fp=open(path,"w")
 
 fp.write(json.dumps(all_cities,sort_keys=False,indent=4,separators=(',', ': ')))
 

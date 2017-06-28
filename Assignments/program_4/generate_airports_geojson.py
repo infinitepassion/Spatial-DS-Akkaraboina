@@ -45,9 +45,10 @@ for k,v in data.items():
     all_aiports.append(gj)
 
 
-#pp.pprint(all_aiports[0])
+path=os.getcwd()+"\geo_json\\1000_airports_geo_json.geojson"
 
-fp=open("Z:\\MS\MWSU\\Summer 1 2017\\program_4\\geo_json\\1000_airports_geo_json.geojson","w")
+
+fp=open(path,"w")
 
 fp.write(json.dumps(all_aiports,sort_keys=False,indent=4,separators=(',', ': ')))
 
