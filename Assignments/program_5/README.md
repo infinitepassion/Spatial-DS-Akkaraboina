@@ -16,6 +16,9 @@ Part1
 
 Part 2
 ------
+
+Run the load_mongo to load the mongo with our required databases.
+
 	Query 1: Find Interesting Features along some path:
 	---------------------------------------------------
 		•Select a starting point: X and a destination point Y. This can be done by mouse click, or by entering airport codes via sys.argv
