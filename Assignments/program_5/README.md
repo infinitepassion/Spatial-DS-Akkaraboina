@@ -19,7 +19,7 @@ Part 2
 		•Select a starting point: X and a destination point Y. This can be done by mouse click, or by entering airport codes via sys.argv
 		•sample query running format
 			python query1.py DFW DOH 500
-		•We can try all the possible combinatins of airports, but the src and dest airports should be in upper case and whenever there is no possible airport within specified radius, the radius is changed to radius+100 for that point and then reverted back to radius specified while executing
+		•We can try all the possible combinatins of airports, whenever there is no possible airport within specified radius, the radius is changed to radius+100 for that point and then reverted back to radius specified while executing
 		•All the airports are displayed as pins and the volcanos as red dots, earthquakes as blue dots and meteor as green dots.
 		•The larger the radius the clearer is the ouput.
 	
