@@ -24,6 +24,7 @@ Part 2
 		•We can try all the possible combinatins of airports, whenever there is no possible airport within specified radius, the radius is changed to radius+100 for that point and then reverted back to radius specified while executing
 		•All the airports are displayed as pins and the volcanos as red dots, earthquakes as blue dots and meteor as green dots.
 		•The larger the radius the clearer is the ouput.
+		
 	
 	Query 2: Nearest Neighbor:
 	--------------------------
@@ -47,6 +48,8 @@ Part 2
 		python query2.py volcanos altitude 3000 min 3 1000
 		python query2.py earthquakes magnitude 5 min 0 2000, 0 means all
 		python query2.py 1000
+	
+	• If on a mosue click, if there are no volcanos or earthquakes or meteorites, it means on our filter cinditions there is nothing to display so please try at another point or chnage the filters in the command line
 	
 	Query 3: Clustering:
 	--------------------
