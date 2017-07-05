@@ -26,23 +26,28 @@ Part 2
 	Query 2: Nearest Neighbor:
 	--------------------------
 	•Click on the world map and get the nearest feature within XXX miles, possibly with specific feature values, further filtering the query (magnitude of earthquake, etc.) where features are listed below:
-Volcanos
-Earthquakes
-Meteors
+		Volcanos
+		Earthquakes
+		Meteors
+	•sample query running format
+		python query2.py [feature] [field] [field value] [min/max] [max results] [radius] [lon,lat]
+			feature = volcano, earthquake, meteor
+			field = some field in the 'properties' to compare against
+			field_value = the value in wich to compare with
+			min/max = whether we want all results greater than or less than the field_value.
+			radius (in miles) = radius to apply our query with.
+			lon,lat (optional) = Some point coords to act as a mouse click instead of actually clicking the screen.
+			
+		python query2.py r
+			r=radius
 
-
-python query2.py [feature] [field] [field value] [min/max] [max results] [radius] [lon,lat]
-feature = volcano, earthquake, meteor
-field = some field in the 'properties' to compare against
-field_value = the value in wich to compare with
-min/max = whether we want all results greater than or less than the field_value.
-radius (in miles) = radius to apply our query with.
-lon,lat (optional) = Some point coords to act as a mouse click instead of actually clicking the screen.
-
-python query2.py volcanos altitude 3000 min 3 1000
-
-python query2.py earthquakes magnitude 5 min 0 2000, 0 means all
-
-python query2.py 1000
+	•Some examples
+		python query2.py volcanos altitude 3000 min 3 1000
+		python query2.py earthquakes magnitude 5 min 0 2000, 0 means all
+		python query2.py 1000
+	
+	Query 3: Clustering:
+	--------------------
+	
 •
 •
