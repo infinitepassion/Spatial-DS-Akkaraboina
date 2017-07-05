@@ -8,7 +8,9 @@ Part1
 -----
 
 • A file named query_ideas.md of all the ideas possible
+
 • A file named mongotest.py, sample pymongo program from class lectures.
+
 • A file named pymongo_proof.png to prove mongo is working properly on my system.
 
 
