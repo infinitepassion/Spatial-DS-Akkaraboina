@@ -48,6 +48,17 @@ Part 2
 	
 	Query 3: Clustering:
 	--------------------
+	• Use dbscan to find the top 3-5 clusters of volcanoes, earthquakes, and meteors.
+	• sample query running format
+		python query3.py [feature] [min_pts] [eps]
+		Feature = (volcano, earthquake, meteor) and
+		min_pts = minimum points to make a cluster, and
+		eps is the distance parameter for dbscanpython 
 	
-•
-•
+		query3.py volcanos 5 3
+		query3.py eartquakes 5 3
+		query3.py meteorites 5 3
+	• Volcanos as a feature run quickly as data is less, rest two take time.
+	
+	
+
