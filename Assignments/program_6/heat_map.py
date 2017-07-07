@@ -1,7 +1,7 @@
 """
 Program:
 --------
-    Program 5 - Heat Map
+    Program 6 - Heat Map
 
 Description:
 ------------
